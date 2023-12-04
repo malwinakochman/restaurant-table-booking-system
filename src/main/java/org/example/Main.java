@@ -2,6 +2,6 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Restaurant table booking system)");
+        System.out.println("Restaurant table booking system");
     }
 }
