@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class Dish {
     Integer dishId;
-    String dishType;
+    DishType dishType;
 }
