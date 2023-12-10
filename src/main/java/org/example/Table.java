@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Table {
-    Integer tableNumber;
+    Integer tableId;
     Integer numberOfSeats;
 }
