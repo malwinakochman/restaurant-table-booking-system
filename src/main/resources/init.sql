@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS Bill (
 
 CREATE TABLE IF NOT EXISTS `Table` (
     tableId INT AUTO_INCREMENT PRIMARY KEY,
-    steats INT NOT NULL,
+    seats INT NOT NULL,
     waiterId INT NOT NULL,
     FOREIGN KEY (waiterId) REFERENCES Waiter(waiterId)
 );
@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS Bill (
 
 CREATE TABLE IF NOT EXISTS `Table` (
                                        tableId INT AUTO_INCREMENT PRIMARY KEY,
-                                       steats INT NOT NULL,
+                                       seats INT NOT NULL,
                                        waiterId INT NOT NULL,
                                        FOREIGN KEY (waiterId) REFERENCES Waiter(waiterId)
     );
@@ -132,14 +132,26 @@ CREATE TABLE IF NOT EXISTS Reservation (
     CHECK (hour > 8 AND hour < 23)
     );
 
-CREATE VIEW View_1 AS
-SELECT `Table`.waiterId, Customer.customerId, Bill.billId, `Table`.tableId
-FROM Reservation
-         INNER JOIN Customer ON Reservation.customerId = Customer.customerId
-         INNER JOIN Bill ON Reservation.billId = Bill.billId
-         INNER JOIN `Table` ON Reservation.tableId = `Table`.tableId
-         CROSS JOIN Dishes
-         CROSS JOIN Restaurant;
+INSERT INTO Restaurant (name, street, postal_code, city, building_number, tables, waiters) VALUES
+('Restaurant A', 'Street A', '123456', 'City A', '1A', 10, 5),
+('Restaurant B', 'Street B', '654321', 'City B', '2B', 15, 8);
+INSERT INTO Waiter (waiterName, waiterSurname, servedTable, phone) VALUES
+('John', 'Doe', 1, '123456789'),
+('Jane', 'Doe', 2, '987654321');
+INSERT INTO Customer (customerSurname, phone) VALUES
+('Smith', '111222333'),
+('Johnson', '444555666');
+INSERT INTO Dishes (dishName, dishPrice, dishType) VALUES
+('Spaghetti', 9.99, 'Main'),
+('Cheesecake', 5.50, 'Dessert');
+INSERT INTO Bill (billPrice, isPayed, listOfDishes) VALUES
+(15.49, FALSE, 'Spaghetti, Cheesecake'),
+(20.99, TRUE, 'Spaghetti x2');
+INSERT INTO `Table` (seats, waiterId) VALUES
+(4, 1),
+(2, 2);
+INSERT INTO Reservation (hour, tableId, customerId, billId, date) VALUES
+(12, 1, 1, 1, '2023-01-01'),
+(19, 2, 2, 2, '2023-01-02');
 
-INSERT INTO Restaurant (name, street, postal_code, city, building_number, tables, waiters)
-VALUES ('Nazwa Restauracji', 'Ulica', '00-000', 'Miasto', '1', 10, 5);
+
