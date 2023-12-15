@@ -1,14 +1,16 @@
 package org.example.models;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Data
+@Table(name = "Restaurant")
 @Getter
 @Setter
 @Entity
-@Table(name = "Restaurant")
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,14 +1,17 @@
 package org.example.models;
 
 import jakarta.persistence.*;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@Data
 @Table(name = "Table")
-public class TTable {
+public class TableModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tableId;

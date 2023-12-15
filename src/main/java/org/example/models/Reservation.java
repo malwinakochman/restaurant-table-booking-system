@@ -1,18 +1,18 @@
 package org.example.models;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 
-import java.time.LocalTime;
+
 import java.util.Date;
-import java.util.List;
 
+@Data
+@Table(name = "Reservation")
 @Getter
 @Setter
 @Entity
-@Table(name = "Reservation")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "tableId", nullable = false)
-    private TTable table;
+    private TableModel table;
 
     @ManyToOne
     @JoinColumn(name = "customerId", nullable = false)

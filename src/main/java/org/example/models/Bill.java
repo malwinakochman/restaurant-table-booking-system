@@ -1,16 +1,18 @@
 package org.example.models;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "Bill")
+@Getter
+@Setter
+@Data
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
