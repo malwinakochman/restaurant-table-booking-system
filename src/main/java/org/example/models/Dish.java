@@ -24,6 +24,7 @@ public class Dish {
     @Column(name = "dish_price", nullable = false)
     private BigDecimal dishPrice;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "dish_type", nullable = false, length = 50)
     private DishType dishType;
 }

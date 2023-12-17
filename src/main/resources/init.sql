@@ -82,8 +82,8 @@ INSERT INTO customer (customer_surname, phone) VALUES
 ('Johnson', '444555666');
 
 INSERT INTO dishes (dish_name, dish_price, dish_type) VALUES
-('Spaghetti', 9.99, 'Main'),
-('Cheesecake', 5.50, 'Dessert');
+('Spaghetti', 9.99, 'MAIN_COURSE'),
+('Cheesecake', 5.50, 'DESSERT');
 
 INSERT INTO bill (bill_price, is_payed, list_of_dishes) VALUES
 (15.49, FALSE, 'Spaghetti, Cheesecake'),
