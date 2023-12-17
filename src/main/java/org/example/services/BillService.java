@@ -1,8 +1,11 @@
 package org.example.services;
 
 import org.example.models.Bill;
+import org.example.models.Restaurant;
 import org.example.repositories.BillRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BillService {
@@ -24,5 +27,9 @@ public class BillService {
 
     public void deleteBill(Integer id) {
         billRepository.deleteById(id);
+    }
+
+    public List<Bill> getAll() {
+        return billRepository.findAll();
     }
 }
