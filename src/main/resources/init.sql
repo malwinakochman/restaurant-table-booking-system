@@ -2,85 +2,97 @@ CREATE DATABASE IF NOT EXISTS bookingSystem;
 
 USE bookingSystem;
 
-CREATE TABLE IF NOT EXISTS Restaurant (
-                                          restaurant_id INT AUTO_INCREMENT PRIMARY KEY,
-                                          name VARCHAR(50) NOT NULL,
-    street VARCHAR(50) NOT NULL,
-    postal_code CHAR(6) NOT NULL,
-    city VARCHAR(50) NOT NULL,
-    building_number CHAR(5) NOT NULL,
-    tables INT NOT NULL,
-    waiters INT NOT NULL
-    );
+CREATE TABLE IF NOT EXISTS restaurant
+(
+    restaurant_id   INT AUTO_INCREMENT PRIMARY KEY,
+    name            VARCHAR(50) NOT NULL,
+    street          VARCHAR(50) NOT NULL,
+    postal_code     CHAR(6)     NOT NULL,
+    city            VARCHAR(50) NOT NULL,
+    building_number CHAR(5)     NOT NULL,
+    tables          INT         NOT NULL,
+    waiters         INT         NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS Waiter (
-                                      waiterId INT AUTO_INCREMENT PRIMARY KEY,
-                                      waiterName VARCHAR(50) NOT NULL,
-    waiterSurname VARCHAR(50) NOT NULL,
-    servedTable INT NOT NULL,
-    phone CHAR(9) NOT NULL
-    );
+CREATE TABLE IF NOT EXISTS waiter
+(
+    waiter_id      INT AUTO_INCREMENT PRIMARY KEY,
+    waiter_name    VARCHAR(50) NOT NULL,
+    waiter_surname VARCHAR(50) NOT NULL,
+    served_table   INT         NOT NULL,
+    phone          CHAR(9)     NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS Customer (
-                                        customerId INT AUTO_INCREMENT PRIMARY KEY,
-                                        customerSurname VARCHAR(50) NOT NULL,
-    phone CHAR(9) NOT NULL
-    );
+CREATE TABLE IF NOT EXISTS customer
+(
+    customer_id      INT AUTO_INCREMENT PRIMARY KEY,
+    customer_surname VARCHAR(50) NOT NULL,
+    phone            CHAR(9)     NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS Dishes (
-                                      dishId INT AUTO_INCREMENT PRIMARY KEY,
-                                      dishName VARCHAR(50) NOT NULL,
-    dishPrice DECIMAL(5, 2) NOT NULL,
-    dishType VARCHAR(50) NOT NULL
-    );
+CREATE TABLE IF NOT EXISTS dishes
+(
+    dish_id    INT AUTO_INCREMENT PRIMARY KEY,
+    dish_name  VARCHAR(50)   NOT NULL,
+    dish_price DECIMAL(5, 2) NOT NULL,
+    dish_type  VARCHAR(50)   NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS Bill (
-                                    billId INT AUTO_INCREMENT PRIMARY KEY,
-                                    billPrice DECIMAL(6, 2) NOT NULL,
-    isPayed BOOLEAN NOT NULL DEFAULT 0,
-    listOfDishes VARCHAR(50) NOT NULL
-    );
+CREATE TABLE IF NOT EXISTS bill
+(
+    bill_id        INT AUTO_INCREMENT PRIMARY KEY,
+    bill_price     DECIMAL(6, 2) NOT NULL,
+    is_payed       BOOLEAN       NOT NULL DEFAULT 0,
+    list_of_dishes VARCHAR(50)   NOT NULL
+);
 
-CREATE TABLE IF NOT EXISTS `Table` (
-                                       tableId INT AUTO_INCREMENT PRIMARY KEY,
-                                       seats INT NOT NULL,
-                                       waiterId INT NOT NULL,
-                                       FOREIGN KEY (waiterId) REFERENCES Waiter(waiterId)
-    );
+CREATE TABLE IF NOT EXISTS restaurant_table
+(
+    table_id  INT AUTO_INCREMENT PRIMARY KEY,
+    seats     INT NOT NULL,
+    waiter_id INT NOT NULL,
+    FOREIGN KEY (waiter_id) REFERENCES waiter (waiter_id)
+);
 
-CREATE TABLE IF NOT EXISTS Reservation (
-                                           reservationId INT AUTO_INCREMENT PRIMARY KEY,
-                                           hour INT NOT NULL,
-                                           tableId INT NOT NULL,
-                                           customerId INT NOT NULL,
-                                           billId INT NOT NULL,
-                                           date DATE NOT NULL,
-                                           FOREIGN KEY (tableId) REFERENCES `Table`(tableId),
-    FOREIGN KEY (customerId) REFERENCES Customer(customerId),
-    FOREIGN KEY (billId) REFERENCES Bill(billId),
+CREATE TABLE IF NOT EXISTS reservation
+(
+    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    hour           INT  NOT NULL,
+    table_id       INT  NOT NULL,
+    customer_id    INT  NOT NULL,
+    bill_id        INT  NOT NULL,
+    date           DATE NOT NULL,
+    FOREIGN KEY (table_id) REFERENCES restaurant_table (table_id),
+    FOREIGN KEY (customer_id) REFERENCES customer (customer_id),
+    FOREIGN KEY (bill_id) REFERENCES bill (bill_id),
     CHECK (hour > 8 AND hour < 23)
-    );
+);
 
-INSERT INTO Restaurant (name, street, postal_code, city, building_number, tables, waiters) VALUES
+
+INSERT INTO restaurant (name, street, postal_code, city, building_number, tables, waiters) VALUES
 ('Restaurant A', 'Street A', '123456', 'City A', '1A', 10, 5),
 ('Restaurant B', 'Street B', '654321', 'City B', '2B', 15, 8);
-INSERT INTO Waiter (waiterName, waiterSurname, servedTable, phone) VALUES
+
+INSERT INTO waiter (waiter_name, waiter_surname, served_table, phone) VALUES
 ('John', 'Doe', 1, '123456789'),
 ('Jane', 'Doe', 2, '987654321');
-INSERT INTO Customer (customerSurname, phone) VALUES
+
+INSERT INTO customer (customer_surname, phone) VALUES
 ('Smith', '111222333'),
 ('Johnson', '444555666');
-INSERT INTO Dishes (dishName, dishPrice, dishType) VALUES
+
+INSERT INTO dishes (dish_name, dish_price, dish_type) VALUES
 ('Spaghetti', 9.99, 'Main'),
 ('Cheesecake', 5.50, 'Dessert');
-INSERT INTO Bill (billPrice, isPayed, listOfDishes) VALUES
+
+INSERT INTO bill (bill_price, is_payed, list_of_dishes) VALUES
 (15.49, FALSE, 'Spaghetti, Cheesecake'),
 (20.99, TRUE, 'Spaghetti x2');
-INSERT INTO `Table` (seats, waiterId) VALUES
+
+INSERT INTO restaurant_table (seats, waiter_id) VALUES
 (4, 1),
 (2, 2);
-INSERT INTO Reservation (hour, tableId, customerId, billId, date) VALUES
+
+INSERT INTO reservation (hour, table_id, customer_id, bill_id, date) VALUES
 (12, 1, 1, 1, '2023-01-01'),
 (19, 2, 2, 2, '2023-01-02');
-
-

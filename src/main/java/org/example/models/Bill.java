@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "Bill")
+@Table(name = "bill")
 @Getter
 @Setter
 @Data
@@ -18,13 +18,13 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer billId;
 
-    @Column(name = "billPrice", nullable = false)
+    @Column(name = "bill_price", nullable = false)
     private BigDecimal billPrice;
 
-    @Column(name = "isPayed", nullable = false)
+    @Column(name = "is_payed", nullable = false)
     private Boolean isPayed;
 
-    @Column(name = "listOfDishes", nullable = false, length = 50)
+    @Column(name = "list_of_dishes", nullable = false, length = 50)
     private String listOfDishes;
 
 }

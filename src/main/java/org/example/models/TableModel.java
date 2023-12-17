@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Data
-@Table(name = "Table")
+@Table(name = "restaurant_table")
 public class TableModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class TableModel {
     private Integer numberOfSeats;
 
     @ManyToOne
-    @JoinColumn(name = "waiterId", nullable = false)
+    @JoinColumn(name = "waiter_id", nullable = false)
     private Waiter waiter;
 
 }

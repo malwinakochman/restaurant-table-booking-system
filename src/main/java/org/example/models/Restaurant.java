@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Table(name = "Restaurant")
+@Table(name = "restaurant")
 @Getter
 @Setter
 @Entity

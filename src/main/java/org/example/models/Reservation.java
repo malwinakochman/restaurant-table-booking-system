@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Data
-@Table(name = "Reservation")
+@Table(name = "reservation")
 @Getter
 @Setter
 @Entity
@@ -25,11 +25,11 @@ public class Reservation {
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "tableId", nullable = false)
+    @JoinColumn(name = "table_id", nullable = false)
     private TableModel table;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
 }

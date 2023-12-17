@@ -16,13 +16,13 @@ public class Waiter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer waiterId;
 
-    @Column(name = "waiterName", nullable = false, length = 50)
+    @Column(name = "waiter_name", nullable = false, length = 50)
     private String waiterName;
 
-    @Column(name = "waiterSurname", nullable = false, length = 50)
+    @Column(name = "waiter_surname", nullable = false, length = 50)
     private String waiterSurname;
 
-    @Column(name = "servedTable", nullable = false)
+    @Column(name = "served_table", nullable = false)
     private Integer servedTable;
 
     @Column(name = "phone", nullable = false, length = 9)

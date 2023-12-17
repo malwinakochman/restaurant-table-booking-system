@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "customer")
 @Getter
 @Setter
 @Data
@@ -16,7 +16,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer customerId;
 
-    @Column(name = "customerSurname", nullable = false, length = 50)
+    @Column(name = "customer_surname", nullable = false, length = 50)
     private String customerSurname;
 
     @Column(name = "phone", nullable = false, length = 9)
