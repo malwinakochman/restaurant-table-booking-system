@@ -1,9 +1,11 @@
 package org.example.services;
 
 import org.example.models.Reservation;
+import org.example.models.TableModel;
 import org.example.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,4 +32,13 @@ public class ReservationService {
     public List<Reservation> getAll() {
         return reservationRepository.findAll();
     }
+
+    public List<Reservation> getByDate(Date date) {
+        return reservationRepository.findByDate(date);
+    }
+
+    public List<TableModel> getAllReservedTables(Date date) {
+        return reservationRepository.findReservedTablesByDate(date);
+    }
+
 }
