@@ -10,10 +10,11 @@ import lombok.Setter;
 @Setter
 @Data
 @Entity
-@Table(name="Waiter")
+@Table(name="waiter")
 public class Waiter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "waiter_id")
     private Integer waiterId;
 
     @Column(name = "waiter_name", nullable = false, length = 50)

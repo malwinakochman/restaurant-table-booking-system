@@ -14,6 +14,7 @@ import lombok.Setter;
 public class TableModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "table_id")
     private Integer tableId;
 
     @Column(name = "seats", nullable = false)

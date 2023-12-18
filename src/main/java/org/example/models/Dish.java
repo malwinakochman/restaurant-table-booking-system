@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "dish_id")
     private Integer dishId;
 
     @Column(name = "dish_name", nullable = false, length = 50)
