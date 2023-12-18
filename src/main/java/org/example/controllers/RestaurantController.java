@@ -16,7 +16,7 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping
+    @GetMapping("all")
     public List<Restaurant> getAllRestaurants() {
         return restaurantService.getAll();
     }

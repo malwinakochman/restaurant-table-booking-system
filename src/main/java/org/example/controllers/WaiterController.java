@@ -15,7 +15,7 @@ public class WaiterController {
     @Autowired
     private WaiterService waiterService;
 
-    @GetMapping
+    @GetMapping("all")
     public List<Waiter> getAllWaiters() {
         return waiterService.getAll();
     }

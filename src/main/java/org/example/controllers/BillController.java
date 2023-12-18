@@ -16,7 +16,7 @@ public class BillController {
     @Autowired
     private BillService billService;
 
-    @GetMapping
+    @GetMapping("all")
     public List<Bill> getAllBills() {
         return billService.getAll();
     }
