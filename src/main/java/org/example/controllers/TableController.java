@@ -4,14 +4,16 @@ import org.example.models.TableModel;
 import org.example.services.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/table")
-@CrossOrigin(origins = "http://localhost:8080")  // Dostosuj do adresu frontendu
 public class TableController {
     @Autowired
     private TableService tableService;
