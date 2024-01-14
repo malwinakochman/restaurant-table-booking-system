@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// Marking this class as a REST controller and defining the base URL for all the endpoints within.
 @RestController
 @RequestMapping("/api/bill")
 public class BillController {
@@ -23,11 +24,13 @@ public class BillController {
     @Autowired
     private BillService billService;
 
+    // Endpoint for retrieving all bills.
     @GetMapping("all")
     public List<Bill> getAllBills() {
         return billService.getAll();
     }
 
+    // Endpoint for adding a new bill, with the details provided in the request body.
     @PostMapping("/add")
     public Bill addBill(@RequestBody BillRequest billRequest) {
         Bill newBill = new Bill();
@@ -38,6 +41,7 @@ public class BillController {
         return newBill;
     }
 
+    // Endpoint for editing an existing bill based on the provided bill ID and request body.
     @PutMapping("/edit/{billId}")
     public ResponseEntity<?> editBill(@PathVariable("billId") Integer billId, @RequestBody BillRequest billRequest) {
         Bill existingBill = billService.getBill(billId);

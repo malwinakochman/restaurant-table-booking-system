@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+// Defines the Bill entity with its table mapping and column definitions. (Representation of database table as class)
 @Data
 @Table(name = "reservation")
 @Getter

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.util.Date;
 
-
+// Data Transfer Object (DTO) for carrying data between api request and server-side functions.
 @Getter
 @Setter
 public class ReservationRequest {

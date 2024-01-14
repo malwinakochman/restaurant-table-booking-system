@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+// Defines the Bill entity with its table mapping and column definitions. (Representation of database table as class)
 @Entity
 @Table(name = "customer")
 @Getter

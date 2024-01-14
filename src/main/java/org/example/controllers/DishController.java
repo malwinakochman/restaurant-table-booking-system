@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// Marking this class as a REST controller and defining the base URL for all the endpoints within.
 @RestController
 @RequestMapping("/api/dish")
 public class DishController {
     @Autowired
     private DishService dishService;
 
+    // Endpoint for retrieving all dishes.
     @GetMapping("all")
     public List<Dish> getAllDishes() {
         return dishService.getAll();

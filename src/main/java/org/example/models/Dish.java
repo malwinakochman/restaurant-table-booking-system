@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+// Defines the Bill entity with its table mapping and column definitions. (Representation of database table as class)
 @Entity
 @Table(name = "dishes")
 @Getter
