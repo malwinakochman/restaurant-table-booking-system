@@ -30,10 +30,6 @@ public class Reservation {
     private TableModel table;
 
     @ManyToOne
-    @JoinColumn(name = "bill_id", nullable = false)
-    private Bill bill;
-
-    @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 

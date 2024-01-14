@@ -13,6 +13,5 @@ public class ReservationRequest {
     private Integer hour;
     private Integer tableId;
     private Integer customerId;
-    private Integer billId;
     private Date date;
 }

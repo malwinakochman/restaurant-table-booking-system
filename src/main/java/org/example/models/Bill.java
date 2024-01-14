@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Table(name = "bill")
@@ -27,5 +28,17 @@ public class Bill {
 
     @Column(name = "list_of_dishes", nullable = false, length = 50)
     private String listOfDishes;
+
+    @ManyToOne
+    @JoinColumn(name = "reservation_id", referencedColumnName = "reservation_id")
+    private Reservation reservation;
+
+    @Column(name = "date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
+    @ManyToOne
+    @JoinColumn(name = "waiter_id", referencedColumnName = "waiter_id", nullable = false)
+    private Waiter waiter;
 
 }
