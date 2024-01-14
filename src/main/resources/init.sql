@@ -38,6 +38,14 @@ CREATE TABLE IF NOT EXISTS dishes
     dish_type  VARCHAR(50)   NOT NULL
     );
 
+CREATE TABLE IF NOT EXISTS restaurant_table
+(
+    table_id  INT AUTO_INCREMENT PRIMARY KEY,
+    seats     INT NOT NULL,
+    waiter_id INT NOT NULL,
+    FOREIGN KEY (waiter_id) REFERENCES waiter (waiter_id)
+    );
+
 CREATE TABLE IF NOT EXISTS reservation
 (
     reservation_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -60,17 +68,8 @@ CREATE TABLE IF NOT EXISTS bill
     date           DATE NOT NULL,
     waiter_id INT NOT NULL,
     FOREIGN KEY (reservation_id) REFERENCES reservation (reservation_id),
-    FOREIGN KEY (date) REFERENCES reservation (date),
     FOREIGN KEY (waiter_id) REFERENCES waiter (waiter_id)
 
-    );
-
-CREATE TABLE IF NOT EXISTS restaurant_table
-(
-    table_id  INT AUTO_INCREMENT PRIMARY KEY,
-    seats     INT NOT NULL,
-    waiter_id INT NOT NULL,
-    FOREIGN KEY (waiter_id) REFERENCES waiter (waiter_id)
     );
 
 INSERT INTO restaurant (name, street, postal_code, city, building_number, tables, waiters) VALUES
@@ -89,6 +88,10 @@ INSERT INTO dishes (dish_name, dish_price, dish_type) VALUES
                                                           ('Spaghetti', 9.99, 'MAIN_COURSE'),
                                                           ('Cheesecake', 5.50, 'DESSERT');
 
+INSERT INTO restaurant_table (seats, waiter_id) VALUES
+                                                    (4, 1),
+                                                    (2, 2);
+
 INSERT INTO reservation (hour, table_id, customer_id, date) VALUES
                                                                 (12, 1, 1,'2023-01-01'),
                                                                 (19, 2, 2,'2023-01-02');
@@ -97,7 +100,5 @@ INSERT INTO bill (bill_price, is_payed, list_of_dishes, date, waiter_id, reserva
                                                                                              (15.49, FALSE, 'Spaghetti, Cheesecake','2023-01-01', 1, 1),
                                                                                              (20.99, TRUE, 'Spaghetti x2', '2023-01-02', 2,2);
 
-INSERT INTO restaurant_table (seats, waiter_id) VALUES
-                                                    (4, 1),
-                                                    (2, 2);
+
 
