@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.models.Bill;
+import org.example.models.Dish;
 import org.example.models.Waiter;
 import org.example.requests.BillRequest;
 import org.example.services.BillService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Marking this class as a REST controller and defining the base URL for all the endpoints within.
 @RestController
@@ -46,12 +48,11 @@ public class BillController {
         Bill newBill = new Bill();
         newBill.setBillPrice(billRequest.getBillPrice());
         newBill.setIsPayed(billRequest.getIsPayed());
-        newBill.setListOfDishes(billRequest.getListOfDishes());
+        newBill.setListOfDishes(getDishesAsString(billRequest.getListOfDishes()));
         newBill.setDate(LocalDateTime.now());
 //        Reservation reservation = reservationService.getReservation(billRequest.getReservationId());
 //        newBill.setReservation(reservation);
-        Waiter waiter = waiterService.getWaiter(billRequest.getWaiterId());
-        newBill.setWaiter(waiter);
+        newBill.setWaiter(waiterService.getWaiter(billRequest.getWaiterId()));
         billService.saveBill(newBill);
         return newBill;
     }
@@ -68,7 +69,7 @@ public class BillController {
                 existingBill.setIsPayed(billRequest.getIsPayed());
             }
             if (billRequest.getListOfDishes() != null) {
-                existingBill.setListOfDishes(billRequest.getListOfDishes());
+                existingBill.setListOfDishes(getDishesAsString(billRequest.getListOfDishes()));
             }
             billService.saveBill(existingBill);
             return ResponseEntity.ok(existingBill);
@@ -77,6 +78,13 @@ public class BillController {
                     .status(HttpStatus.NOT_FOUND)
                     .body("Rachunek o ID " + billId + " nie został znaleziony.");
         }
+    }
+
+    private static String getDishesAsString(List<Dish> listOfDishes) {
+        String dishes = listOfDishes.stream()
+                .map(Dish::getDishName)
+                .collect(Collectors.joining(", "));
+        return dishes;
     }
 
 }

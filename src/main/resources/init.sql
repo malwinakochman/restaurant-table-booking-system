@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS bill
     bill_id        INT AUTO_INCREMENT PRIMARY KEY,
     bill_price     DECIMAL(6, 2) NOT NULL,
     is_payed       BOOLEAN       NOT NULL DEFAULT 0,
-    list_of_dishes VARCHAR(50)   NOT NULL,
+    list_of_dishes VARCHAR(500)   NOT NULL,
     reservation_id INT,
     date           DATETIME NOT NULL,
     waiter_id INT NOT NULL,
