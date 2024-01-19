@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -43,14 +44,18 @@ public class ReservationController {
 
     // Endpoint for adding a new reservation, with the details provided in the request body.
     @PostMapping("add")
-    public ResponseEntity<Reservation> addReservation(@RequestBody ReservationRequest reservationRequest) {
+    public ResponseEntity<String> addReservation(@RequestBody ReservationRequest reservationRequest) {
         Reservation newReservation = new Reservation();
         Customer customer = customerService.getCustomer(reservationRequest.getCustomerId());
+        if (customer == null) {
+            // Handle the case where the customer is not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
+        }
         newReservation.setCustomer(customer);
         newReservation.setDate(reservationRequest.getDate());
         TableModel table = tableService.getTable(reservationRequest.getTableId());
         newReservation.setTable(table);
         reservationService.saveReservation(newReservation);
-        return ResponseEntity.ok(newReservation);
+        return ResponseEntity.ok(String.valueOf(newReservation));
     }
 }

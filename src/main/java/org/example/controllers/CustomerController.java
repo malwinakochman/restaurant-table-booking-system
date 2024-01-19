@@ -1,11 +1,12 @@
 package org.example.controllers;
 
 import org.example.models.Customer;
+import org.example.requests.CustomerRequest;
 import org.example.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +21,19 @@ public class CustomerController {
     @GetMapping("all")
     public List<Customer> getAllCustomers() {
         return customerService.getAll();
+    }
+
+    // REST endpoint for adding a new customer based on the provided CustomerRequest data.
+    // This endpoint receives a JSON representation of CustomerRequest in the request body.
+    @PostMapping("add")
+    public ResponseEntity<Customer> addCustomer(@RequestBody CustomerRequest customerRequest) {
+        Customer newCustomer = new Customer();
+        newCustomer.setCustomerSurname(customerRequest.getCustomerSurname());
+        newCustomer.setPhone(customerRequest.getCustomerPhone());
+
+        Customer savedCustomer = customerService.saveCustomer(newCustomer);
+
+        // Zwróć kod 201 Created i obiekt savedCustomer w ciele odpowiedzi
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomer);
     }
 }
