@@ -8,11 +8,7 @@ import org.example.services.ReservationService;
 import org.example.services.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -21,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/reservation")
 public class ReservationController {
-    @Autowired
+
     private ReservationService reservationService;
     private TableService tableService;
     private BillService billService;
@@ -50,4 +46,20 @@ public class ReservationController {
         reservationService.saveReservation(newReservation);
         return ResponseEntity.ok(String.valueOf(newReservation));
     }
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> deleteReservation(@PathVariable(name = "id") Integer id) {
+        try {
+            Reservation reservation = reservationService.getReservation(id);
+            if (reservation == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reservation not found");
+            }
+            reservationService.deleteReservation(id);
+            return ResponseEntity.ok("Reservation deleted");
+        } catch (Exception e) {
+            // Log the exception for debugging purposes
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting reservation");
+        }
+    }
+
 }
