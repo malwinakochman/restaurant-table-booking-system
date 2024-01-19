@@ -1,8 +1,13 @@
 package org.example.controllers;
 
+import lombok.AllArgsConstructor;
 import org.example.models.Bill;
+import org.example.models.Reservation;
+import org.example.models.Waiter;
 import org.example.requests.BillRequest;
 import org.example.services.BillService;
+import org.example.services.ReservationService;
+import org.example.services.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +28,10 @@ public class BillController {
 
     @Autowired
     private BillService billService;
+    @Autowired
+    private WaiterService waiterService;
+    @Autowired
+    private ReservationService reservationService;
 
     // Endpoint for retrieving all bills.
     @GetMapping("all")
@@ -37,6 +46,11 @@ public class BillController {
         newBill.setBillPrice(billRequest.getBillPrice());
         newBill.setIsPayed(billRequest.getIsPayed());
         newBill.setListOfDishes(billRequest.getListOfDishes());
+        newBill.setDate(billRequest.getDate());
+//        Reservation reservation = reservationService.getReservation(billRequest.getReservationId());
+//        newBill.setReservation(reservation);
+        Waiter waiter = waiterService.getWaiter(billRequest.getWaiterId());
+        newBill.setWaiter(waiter);
         billService.saveBill(newBill);
         return newBill;
     }

@@ -27,7 +27,7 @@ public class TableController {
 
     // Endpoint for retrieving all free (not reserved) tables.
     @GetMapping("allFree")
-    public List<TableModel> getAllFreeTables(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+    public List<TableModel> getAllFreeTables(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date date) {
         return tableService.getAllFree(date);
     }
 }

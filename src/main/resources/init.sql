@@ -49,13 +49,12 @@ CREATE TABLE IF NOT EXISTS restaurant_table
 CREATE TABLE IF NOT EXISTS reservation
 (
     reservation_id INT AUTO_INCREMENT PRIMARY KEY,
-    hour           INT  NOT NULL,
     table_id       INT  NOT NULL,
     customer_id    INT  NOT NULL,
-    date           DATE NOT NULL,
+    date           DATETIME NOT NULL,
     FOREIGN KEY (table_id) REFERENCES restaurant_table (table_id),
     FOREIGN KEY (customer_id) REFERENCES customer (customer_id),
-    CHECK (hour > 8 AND hour < 23)
+    CHECK (HOUR(date) > 8 AND HOUR(date) < 23)
     );
 
 CREATE TABLE IF NOT EXISTS bill
@@ -65,7 +64,7 @@ CREATE TABLE IF NOT EXISTS bill
     is_payed       BOOLEAN       NOT NULL DEFAULT 0,
     list_of_dishes VARCHAR(50)   NOT NULL,
     reservation_id INT,
-    date           DATE NOT NULL,
+    date           DATETIME NOT NULL,
     waiter_id INT NOT NULL,
     FOREIGN KEY (reservation_id) REFERENCES reservation (reservation_id),
     FOREIGN KEY (waiter_id) REFERENCES waiter (waiter_id)
@@ -92,13 +91,13 @@ INSERT INTO restaurant_table (seats, waiter_id) VALUES
                                                     (4, 1),
                                                     (2, 2);
 
-INSERT INTO reservation (hour, table_id, customer_id, date) VALUES
-                                                                (12, 1, 1,'2023-01-01'),
-                                                                (19, 2, 2,'2023-01-02');
+INSERT INTO reservation (table_id, customer_id, date) VALUES
+                                                                ( 1, 1,'2023-01-01 12:00:00'),
+                                                                ( 2, 2,'2023-01-01 19:00:00');
 
 INSERT INTO bill (bill_price, is_payed, list_of_dishes, date, waiter_id, reservation_id) VALUES
-                                                                                             (15.49, FALSE, 'Spaghetti, Cheesecake','2023-01-01', 1, 1),
-                                                                                             (20.99, TRUE, 'Spaghetti x2', '2023-01-02', 2,2);
+                                                                                             (15.49, FALSE, 'Spaghetti, Cheesecake','2023-01-01 12:00:00', 1, 1),
+                                                                                             (20.99, TRUE, 'Spaghetti x2', '2023-01-01 19:00:00', 2,2);
 
 
 

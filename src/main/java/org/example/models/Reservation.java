@@ -6,6 +6,7 @@ import lombok.Setter;
 import jakarta.persistence.*;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 // Defines the Bill entity with its table mapping and column definitions. (Representation of database table as class)
@@ -19,9 +20,6 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Integer reservationId;
-
-    @Column(name = "hour", nullable = false)
-    private Integer hour;
 
     @Column(name = "date", nullable = false)
     private Date date;

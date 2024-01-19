@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 // Defines the Bill entity with its table mapping and column definitions. (Representation of database table as class)

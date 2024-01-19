@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.models.Bill;
 import org.example.models.Reservation;
 import org.example.models.TableModel;
 import org.example.repositories.ReservationRepository;
@@ -40,5 +41,4 @@ public class ReservationService {
     public List<TableModel> getAllReservedTables(Date date) {
         return reservationRepository.findReservedTablesByDate(date);
     }
-
 }

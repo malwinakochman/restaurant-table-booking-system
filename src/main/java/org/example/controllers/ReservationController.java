@@ -47,7 +47,6 @@ public class ReservationController {
         Reservation newReservation = new Reservation();
         Customer customer = customerService.getCustomer(reservationRequest.getCustomerId());
         newReservation.setCustomer(customer);
-        newReservation.setHour(reservationRequest.getHour());
         newReservation.setDate(reservationRequest.getDate());
         TableModel table = tableService.getTable(reservationRequest.getTableId());
         newReservation.setTable(table);
