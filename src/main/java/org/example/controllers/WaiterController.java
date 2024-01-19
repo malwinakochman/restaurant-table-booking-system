@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.models.Waiter;
+import org.example.requests.WaiterDTO;
 import org.example.services.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,11 @@ public class WaiterController {
     @GetMapping("all")
     public List<Waiter> getAllWaiters() {
         return waiterService.getAll();
+    }
+
+    @GetMapping("allNames")
+    public List<WaiterDTO> getAllWaiterNameAndId() {
+        return waiterService.getAllNameAndId();
     }
 
 }

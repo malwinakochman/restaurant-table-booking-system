@@ -2,9 +2,11 @@ package org.example.services;
 
 import org.example.models.Waiter;
 import org.example.repositories.WaiterRepository;
+import org.example.requests.WaiterDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WaiterService {
@@ -29,5 +31,9 @@ public class WaiterService {
 
     public List<Waiter> getAll() {
         return waiterRepository.findAll();
+    }
+
+    public List<WaiterDTO> getAllNameAndId() {
+        return waiterRepository.findAllWaiterNamesAndId();
     }
 }
