@@ -40,4 +40,6 @@ public class ReservationService {
     public List<TableModel> getAllReservedTables(LocalDateTime date) {
         return reservationRepository.findReservedTablesByDate(date);
     }
+
+
 }

@@ -23,13 +23,6 @@ CREATE TABLE IF NOT EXISTS waiter
     phone          CHAR(9)     NOT NULL
     );
 
-CREATE TABLE IF NOT EXISTS customer
-(
-    customer_id      INT AUTO_INCREMENT PRIMARY KEY,
-    customer_surname VARCHAR(50) NOT NULL,
-    phone            CHAR(9)     NOT NULL
-    );
-
 CREATE TABLE IF NOT EXISTS dishes
 (
     dish_id    INT AUTO_INCREMENT PRIMARY KEY,
@@ -50,10 +43,10 @@ CREATE TABLE IF NOT EXISTS reservation
 (
     reservation_id INT AUTO_INCREMENT PRIMARY KEY,
     table_id       INT  NOT NULL,
-    customer_id    INT  NOT NULL,
     date           DATETIME NOT NULL,
+    customer_surname VARCHAR(50),
+    customer_phone VARCHAR(9) NOT NULL,
     FOREIGN KEY (table_id) REFERENCES restaurant_table (table_id),
-    FOREIGN KEY (customer_id) REFERENCES customer (customer_id),
     CHECK (HOUR(date) > 8 AND HOUR(date) < 23)
     );
 
@@ -79,10 +72,6 @@ INSERT INTO waiter (waiter_name, waiter_surname, served_table, phone) VALUES
                                                                           ('John', 'Doe', 1, '123456789'),
                                                                           ('Jane', 'Doe', 2, '987654321');
 
-INSERT INTO customer (customer_surname, phone) VALUES
-                                                   ('Smith', '111222333'),
-                                                   ('Johnson', '444555666');
-
 INSERT INTO dishes (dish_name, dish_price, dish_type) VALUES
                                                           ('Spaghetti', 9.99, 'MAIN_COURSE'),
                                                           ('Cheesecake', 5.50, 'DESSERT');
@@ -91,9 +80,9 @@ INSERT INTO restaurant_table (seats, waiter_id) VALUES
                                                     (4, 1),
                                                     (2, 2);
 
-INSERT INTO reservation (table_id, customer_id, date) VALUES
-                                                                ( 1, 1,'2023-01-01 12:00:00'),
-                                                                ( 2, 2,'2023-01-01 19:00:00');
+INSERT INTO reservation (table_id, date, customer_surname, customer_phone) VALUES
+                                                                ( 1,'2023-01-01 12:00:00', 'Smith', '111222333'),
+                                                                ( 2,'2023-01-01 19:00:00', 'Hudson', '123123123');
 
 INSERT INTO bill (bill_price, is_payed, list_of_dishes, date, waiter_id, reservation_id) VALUES
                                                                                              (15.49, FALSE, 'Spaghetti, Cheesecake','2023-01-01 12:00:00', 1, 1),

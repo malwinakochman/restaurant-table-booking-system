@@ -1,11 +1,9 @@
 package org.example.controllers;
 
-import org.example.models.Customer;
 import org.example.models.Reservation;
 import org.example.models.TableModel;
 import org.example.requests.ReservationRequest;
 import org.example.services.BillService;
-import org.example.services.CustomerService;
 import org.example.services.ReservationService;
 import org.example.services.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +25,11 @@ public class ReservationController {
     private ReservationService reservationService;
     private TableService tableService;
     private BillService billService;
-    private CustomerService customerService;
 
-    public ReservationController(ReservationService reservationService, TableService tableService, BillService billService, CustomerService customerService) {
+    public ReservationController(ReservationService reservationService, TableService tableService, BillService billService) {
         this.reservationService = reservationService;
         this.tableService = tableService;
         this.billService = billService;
-        this.customerService = customerService;
     }
 
     // Endpoint for retrieving all reservations.
@@ -46,13 +42,9 @@ public class ReservationController {
     @PostMapping("add")
     public ResponseEntity<String> addReservation(@RequestBody ReservationRequest reservationRequest) {
         Reservation newReservation = new Reservation();
-        Customer customer = customerService.getCustomer(reservationRequest.getCustomerId());
-        if (customer == null) {
-            // Handle the case where the customer is not found
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
-        }
-        newReservation.setCustomer(customer);
         newReservation.setDate(reservationRequest.getDate());
+        newReservation.setCustomerSurname(reservationRequest.getCustomerSurname());
+        newReservation.setCustomerPhone(reservationRequest.getCustomerPhone());
         TableModel table = tableService.getTable(reservationRequest.getTableId());
         newReservation.setTable(table);
         reservationService.saveReservation(newReservation);

@@ -27,8 +27,10 @@ public class Reservation {
     @JoinColumn(name = "table_id", nullable = false)
     private TableModel table;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @Column(name = "customer_surname")
+    private String customerSurname;
+
+    @Column(name = "customer_phone", nullable = false)
+    private String customerPhone;
 
 }

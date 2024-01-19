@@ -13,6 +13,7 @@ public class ReservationRequest {
 
     private Integer reservationId;
     private Integer tableId;
-    private Integer customerId;
+    private String customerSurname;
+    private String customerPhone;
     private LocalDateTime date;
 }
