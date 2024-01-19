@@ -4,7 +4,7 @@ import org.example.models.TableModel;
 import org.example.repositories.TableRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +27,7 @@ public class TableService {
         return tableRepository.findAll();
     }
 
-    public List<TableModel> getAllFree(Date date) {
+    public List<TableModel> getAllFree(LocalDateTime date) {
         List<TableModel> reservedTables = reservationService.getAllReservedTables(date);
         List<TableModel> allTables = getAll();
 

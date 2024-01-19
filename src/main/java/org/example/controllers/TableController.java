@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 // Marking this class as a REST controller and defining the base URL for all the endpoints within.
@@ -27,7 +27,7 @@ public class TableController {
 
     // Endpoint for retrieving all free (not reserved) tables.
     @GetMapping("allFree")
-    public List<TableModel> getAllFreeTables(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date date) {
+    public List<TableModel> getAllFreeTables(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime date) {
         return tableService.getAllFree(date);
     }
 }

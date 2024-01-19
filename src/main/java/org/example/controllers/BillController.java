@@ -1,8 +1,6 @@
 package org.example.controllers;
 
-import lombok.AllArgsConstructor;
 import org.example.models.Bill;
-import org.example.models.Reservation;
 import org.example.models.Waiter;
 import org.example.requests.BillRequest;
 import org.example.services.BillService;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 // Marking this class as a REST controller and defining the base URL for all the endpoints within.
@@ -28,8 +27,10 @@ public class BillController {
 
     @Autowired
     private BillService billService;
+
     @Autowired
     private WaiterService waiterService;
+
     @Autowired
     private ReservationService reservationService;
 
@@ -46,7 +47,7 @@ public class BillController {
         newBill.setBillPrice(billRequest.getBillPrice());
         newBill.setIsPayed(billRequest.getIsPayed());
         newBill.setListOfDishes(billRequest.getListOfDishes());
-        newBill.setDate(billRequest.getDate());
+        newBill.setDate(LocalDateTime.now());
 //        Reservation reservation = reservationService.getReservation(billRequest.getReservationId());
 //        newBill.setReservation(reservation);
         Waiter waiter = waiterService.getWaiter(billRequest.getWaiterId());

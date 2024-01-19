@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 // Defines the Bill entity with its table mapping and column definitions. (Representation of database table as class)
 @Entity
@@ -36,8 +35,7 @@ public class Bill {
     private Reservation reservation;
 
     @Column(name = "date", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "waiter_id", referencedColumnName = "waiter_id", nullable = false)

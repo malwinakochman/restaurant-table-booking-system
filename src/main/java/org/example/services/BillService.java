@@ -1,7 +1,6 @@
 package org.example.services;
 
 import org.example.models.Bill;
-import org.example.models.Restaurant;
 import org.example.repositories.BillRepository;
 import org.springframework.stereotype.Service;
 
