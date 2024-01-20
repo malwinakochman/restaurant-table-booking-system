@@ -50,8 +50,7 @@ public class BillController {
         newBill.setIsPayed(billRequest.getIsPayed());
         newBill.setListOfDishes(getDishesAsString(billRequest.getListOfDishes()));
         newBill.setDate(LocalDateTime.now());
-//        Reservation reservation = reservationService.getReservation(billRequest.getReservationId());
-//        newBill.setReservation(reservation);
+        newBill.setReservation(reservationService.getReservation(billRequest.getReservationId()));
         newBill.setWaiter(waiterService.getWaiter(billRequest.getWaiterId()));
         billService.saveBill(newBill);
         return newBill;
