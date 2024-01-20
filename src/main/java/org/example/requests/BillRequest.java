@@ -4,7 +4,6 @@ package org.example.requests;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.models.Dish;
-import org.example.models.Reservation;
 
 import java.math.BigDecimal;
 import java.util.List;

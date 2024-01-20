@@ -30,4 +30,8 @@ public class DishService {
     public List<Dish> getAll() {
         return dishRepository.findAll();
     }
+
+    public Dish getDishByName(String name) {
+        return dishRepository.findByDishName(name);
+    }
 }

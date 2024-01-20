@@ -2,9 +2,9 @@ package org.example.controllers;
 
 import org.example.models.Bill;
 import org.example.models.Dish;
-import org.example.models.Waiter;
 import org.example.requests.BillRequest;
 import org.example.services.BillService;
+import org.example.services.DishService;
 import org.example.services.ReservationService;
 import org.example.services.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,9 @@ public class BillController {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private DishService dishService;
+
     // Endpoint for retrieving all bills.
     @GetMapping("all")
     public List<Bill> getAllBills() {
@@ -50,7 +54,7 @@ public class BillController {
         newBill.setIsPayed(billRequest.getIsPayed());
         newBill.setListOfDishes(getDishesAsString(billRequest.getListOfDishes()));
         newBill.setDate(LocalDateTime.now());
-        if(billRequest.getReservationId() != null) {
+        if (billRequest.getReservationId() != null) {
             newBill.setReservation(reservationService.getReservation(billRequest.getReservationId()));
         }
         newBill.setWaiter(waiterService.getWaiter(billRequest.getWaiterId()));
@@ -72,6 +76,9 @@ public class BillController {
             if (billRequest.getListOfDishes() != null) {
                 existingBill.setListOfDishes(getDishesAsString(billRequest.getListOfDishes()));
             }
+            if (billRequest.getWaiterId() != null) {
+                existingBill.setWaiter(waiterService.getWaiter(billRequest.getWaiterId()));
+            }
             billService.saveBill(existingBill);
             return ResponseEntity.ok(existingBill);
         } else {
@@ -81,11 +88,44 @@ public class BillController {
         }
     }
 
+    // Endpoint for getting bill by id
+    @GetMapping("/{billId}")
+    public ResponseEntity<?> getBill(@PathVariable("billId") Integer billId) {
+        Bill bill = billService.getBill(billId);
+        if (bill != null) {
+            BillRequest billRequest = new BillRequest();
+            billRequest.setBillId(bill.getBillId());
+            billRequest.setBillPrice(bill.getBillPrice());
+            billRequest.setIsPayed(bill.getIsPayed());
+            billRequest.setListOfDishes(getDishesAsList(bill.getListOfDishes()));
+            billRequest.setWaiterId(bill.getWaiter() != null ? bill.getWaiter().getWaiterId() : null);
+            billRequest.setReservationId(bill.getReservation() != null ? bill.getReservation().getReservationId() : null);
+
+            return ResponseEntity.ok(billRequest);
+        }
+        if (bill != null) {
+            return ResponseEntity.ok(bill);
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Rachunek o ID " + billId + " nie został znaleziony.");
+        }
+    }
+
+    // Private method to get dishes as string from list.
     private static String getDishesAsString(List<Dish> listOfDishes) {
         String dishes = listOfDishes.stream()
                 .map(Dish::getDishName)
                 .collect(Collectors.joining(", "));
         return dishes;
+    }
+
+    // Private method to get dishes as list from string.
+    private List<Dish> getDishesAsList(String listOfDishes) {
+        List<String> dishNames = Arrays.asList(listOfDishes.split(",\\s*"));
+        return dishNames.stream()
+                .map(dishService::getDishByName)
+                .collect(Collectors.toList());
     }
 
 }
