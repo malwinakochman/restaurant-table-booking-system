@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 // Marking this class as a REST controller and defining the base URL for all the endpoints within.
@@ -59,6 +62,20 @@ public class ReservationController {
             // Log the exception for debugging purposes
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting reservation");
+        }
+    }
+
+    @GetMapping("/byDate")
+    public ResponseEntity<List<Reservation>> getReservationsByDate(@RequestParam(name = "date") LocalDate date) {
+        try {
+            List<Reservation> reservations = reservationService.getByDate(date);
+            if (reservations.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+            }
+            return ResponseEntity.ok(reservations);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
         }
     }
 

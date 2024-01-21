@@ -5,8 +5,10 @@ import org.example.models.TableModel;
 import org.example.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
@@ -33,8 +35,10 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-    public List<Reservation> getByDate(LocalDateTime date) {
-        return reservationRepository.findByDate(date);
+    public List<Reservation> getByDate(LocalDate date) {
+            return reservationRepository.findAll().stream()
+                    .filter(reservation -> reservation.getDate().toLocalDate().equals(date))
+                    .collect(Collectors.toList());
     }
 
     public List<TableModel> getAllReservedTables(LocalDateTime date) {
