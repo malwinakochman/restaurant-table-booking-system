@@ -4,6 +4,8 @@ import org.example.models.Bill;
 import org.example.repositories.BillRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,5 +32,16 @@ public class BillService {
 
     public List<Bill> getAll() {
         return billRepository.findAll();
+    }
+
+    public List<Bill> getBillsByFilter(LocalDate date, Integer waiterId, Boolean isPayed, Integer reservationId) {
+        LocalDateTime startOfDay = null;
+        LocalDateTime endOfDay = null;
+
+        if (date != null) {
+            startOfDay = date.atStartOfDay();
+            endOfDay = date.plusDays(1).atStartOfDay();
+        }
+        return billRepository.findBillsByCriteria(startOfDay, endOfDay, waiterId, isPayed, reservationId);
     }
 }

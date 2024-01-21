@@ -8,6 +8,7 @@ import org.example.services.DishService;
 import org.example.services.ReservationService;
 import org.example.services.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -126,6 +129,21 @@ public class BillController {
         return dishNames.stream()
                 .map(dishService::getDishByName)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<Bill>> getBillsByFilter(
+            @RequestParam(name = "date", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(name = "waiterId", required = false) Integer waiterId,
+            @RequestParam(name = "isPayed", required = false) Boolean isPayed,
+            @RequestParam(name = "reservationId", required = false) Integer reservationId) {
+
+        List<Bill> bills = billService.getBillsByFilter(date, waiterId, isPayed, reservationId);
+        if (bills.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(bills);
     }
 
 }
